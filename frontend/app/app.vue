@@ -1,6 +1,6 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center">
+  <div>
     <NuxtRouteAnnouncer />
-    <h1 class="text-3xl font-bold">Whiteboard</h1>
+    <Board />
   </div>
 </template>
