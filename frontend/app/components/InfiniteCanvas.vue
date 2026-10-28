@@ -2,6 +2,8 @@
 const MIN_SCALE = 0.25
 const MAX_SCALE = 4
 
+const props = defineProps<{ placing?: boolean }>()
+
 const offset = reactive({ x: 0, y: 0 })
 const scale = ref(1)
 provide('canvasScale', scale)
@@ -26,6 +28,7 @@ function onWheel(event: WheelEvent) {
 }
 
 function onPointerDown(event: PointerEvent) {
+  if (props.placing) return
   dragging = true
   ;(event.currentTarget as HTMLElement).setPointerCapture(event.pointerId)
 }
@@ -39,11 +42,18 @@ function onPointerMove(event: PointerEvent) {
 function onPointerUp() {
   dragging = false
 }
+
+function toCanvasPoint(clientX: number, clientY: number) {
+  return { x: (clientX - offset.x) / scale.value, y: (clientY - offset.y) / scale.value }
+}
+
+defineExpose({ toCanvasPoint })
 </script>
 
 <template>
   <div
-    class="fixed inset-0 overflow-hidden cursor-grab active:cursor-grabbing touch-none bg-background"
+    class="fixed inset-0 overflow-hidden touch-none bg-background"
+    :class="placing ? 'cursor-crosshair' : 'cursor-grab active:cursor-grabbing'"
     :style="{
       backgroundImage: `radial-gradient(circle, color-mix(in oklch, var(--muted-foreground) 40%, transparent) ${scale}px, transparent ${scale}px)`,
       backgroundSize: `${GRID_SIZE * scale}px ${GRID_SIZE * scale}px`,
