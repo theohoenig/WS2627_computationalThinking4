@@ -3,7 +3,10 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Button } from '@/components/ui/button'
 import type { ToolAttribute } from '~/tools/types'
 
-const props = defineProps<{ attribute: ToolAttribute; modelValue: string }>()
+const props = withDefaults(
+  defineProps<{ attribute: ToolAttribute; modelValue: string; size?: 'icon-xs' | 'icon-sm' }>(),
+  { size: 'icon-xs' },
+)
 const emit = defineEmits<{ 'update:modelValue': [value: string] }>()
 const open = ref(false)
 const value = computed(() => props.modelValue)
@@ -19,7 +22,7 @@ function pick(next: string) {
 <template>
   <Popover v-model:open="open">
     <PopoverTrigger as-child>
-      <Button variant="ghost" size="icon-xs" :aria-label="attribute.label" :title="attribute.label">
+      <Button variant="ghost" :size="size" :aria-label="attribute.label" :title="attribute.label">
         <span v-if="attribute.type === 'color'" class="size-4 rounded-full ring-1 ring-black/15" :style="{ background: value }" />
         <component :is="current?.icon" v-else />
       </Button>

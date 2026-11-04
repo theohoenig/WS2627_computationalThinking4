@@ -1,6 +1,6 @@
 import { ArrowBigRight, Circle, Square, SquareRoundCorner, StickyNote as StickyNoteIcon } from '@lucide/vue'
 import StickyNote from '~/components/StickyNote.vue'
-import { NOTE_COLORS } from '~/types/note'
+import { DEFAULT_FONT_SIZE, NOTE_COLORS } from '~/types/note'
 import type { NoteShape } from '~/types/note'
 import { snapToGrid } from '~/utils/grid'
 import type { ToolDefinition } from './types'
@@ -43,6 +43,8 @@ export const noteTool: ToolDefinition = {
       width,
       height,
       text: '',
+      fontSize: DEFAULT_FONT_SIZE,
+      bold: false,
     }
   },
 }

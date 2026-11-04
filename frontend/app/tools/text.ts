@@ -1,6 +1,6 @@
 import { Type } from '@lucide/vue'
 import StickyNote from '~/components/StickyNote.vue'
-import { TEXT_COLORS } from '~/types/note'
+import { DEFAULT_FONT_SIZE, TEXT_COLORS } from '~/types/note'
 import { snapToGrid } from '~/utils/grid'
 import type { ToolDefinition } from './types'
 
@@ -30,6 +30,8 @@ export const textTool: ToolDefinition = {
       width,
       height,
       text: '',
+      fontSize: DEFAULT_FONT_SIZE,
+      bold: false,
     }
   },
 }

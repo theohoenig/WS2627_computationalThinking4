@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { SHORTCUTS } from '~/shortcuts'
 import { defaultSettings, findTool } from '~/tools'
 
 const board = useBoard()
@@ -7,32 +8,22 @@ const activeToolId = ref<string | null>(null)
 const settings = ref(defaultSettings())
 
 const canvas = useTemplateRef('canvas')
+const selectedNote = computed(() => board.notes.value.find(note => note.id === board.selectedId.value))
+
+useShortcuts(SHORTCUTS, { board, activeToolId })
 
 function onCanvasPointerDown(event: PointerEvent) {
   if (!activeToolId.value || !canvas.value) {
     board.select(null)
     return
   }
-  // Keeps the browser from moving focus away from the new item's textarea.
+  // Keeps the browser from moving focus away from the new item's text.
   event.preventDefault()
   const tool = findTool(activeToolId.value)
   const point = canvas.value.toCanvasPoint(event.clientX, event.clientY)
   board.addNote(tool.create(point, settings.value[tool.id]!))
   activeToolId.value = null
 }
-
-function onKeyDown(event: KeyboardEvent) {
-  if (event.key === 'Escape') activeToolId.value = null
-  // Delete/Backspace while typing edits text instead of removing the note.
-  const typing = event.target instanceof HTMLElement && (event.target.isContentEditable || event.target instanceof HTMLInputElement)
-  const selected = board.selectedId.value
-  if ((event.key === 'Delete' || event.key === 'Backspace') && !typing && selected !== null) {
-    board.removeNote(selected)
-  }
-}
-
-onMounted(() => window.addEventListener('keydown', onKeyDown))
-onUnmounted(() => window.removeEventListener('keydown', onKeyDown))
 </script>
 
 <template>
@@ -46,9 +37,15 @@ onUnmounted(() => window.removeEventListener('keydown', onKeyDown))
       :editing="board.editingId.value === note.id"
       @select="board.select(note.id)"
       @update="board.updateNote(note.id, $event)"
-      @remove="board.removeNote(note.id)"
       @start-editing="board.startEditing(note.id)"
       @stop-editing="board.stopEditing()"
+    />
+    <SelectionBar
+      v-if="selectedNote"
+      :note="selectedNote"
+      :tool="findTool(selectedNote.kind)"
+      @update="board.updateNote(selectedNote.id, $event)"
+      @remove="board.removeNote(selectedNote.id)"
     />
   </InfiniteCanvas>
   <Toolbar v-model:active-tool-id="activeToolId" v-model:settings="settings" />
