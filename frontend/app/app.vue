@@ -10,7 +10,8 @@ const VARIANTS: Record<BoardObject['type'], Component> = {
   'circle': CircleShape,
 }
 
-const { objects, addObject, resizeObject, updateText, updateStyle } = useBoard()
+const { objects, load, addObject, saveObject, resizeObject, updateText, updateStyle } = useBoard()
+await callOnce(load)
 
 // Local UI state of this user; it is not part of the shared board state.
 const scale = ref(1)
@@ -38,10 +39,11 @@ function onGrab(object: BoardObject, event: PointerEvent, mode: GestureMode) {
 }
 
 // New objects appear in the middle of the visible area and open straight into editing if they have text.
-function onAdd(template: ObjectTemplate) {
+async function onAdd(template: ObjectTemplate) {
   const centerX = (window.innerWidth / 2 - offset.value.x) / scale.value
   const centerY = (window.innerHeight / 2 - offset.value.y) / scale.value
-  const id = addObject(template, centerX, centerY)
+  const id = await addObject(template, centerX, centerY)
+  if (!id) return
   onEdit(objects.value.find(object => object.id === id)!)
 }
 
@@ -62,9 +64,9 @@ function onEdit(object: BoardObject) {
       :editing="object.id === editingId"
       @grab="(event: PointerEvent, mode: GestureMode) => onGrab(object, event, mode)"
       @edit="onEdit(object)"
-      @edit-end="editingId = null"
+      @edit-end="editingId = null; saveObject(object.id)"
       @text="(text: string) => updateText(object.id, text)"
-      @resize="(rect: Rect) => resizeObject(object.id, rect)"
+      @resize="(rect: Rect) => { resizeObject(object.id, rect); saveObject(object.id) }"
     />
   </InfiniteCanvas>
   <ObjectContextBar

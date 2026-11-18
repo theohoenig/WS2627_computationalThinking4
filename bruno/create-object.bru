@@ -1,0 +1,30 @@
+meta {
+  name: Create object
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/objects
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "type": "sticky-note",
+    "x": 120,
+    "y": 360,
+    "width": 192,
+    "height": 192,
+    "text": "Created with Bruno",
+    "color": "yellow",
+    "fontSize": 18,
+    "bold": false
+  }
+}
+
+script:post-response {
+  // Remember the new id so "Update object" and "Delete object" work on this object.
+  bru.setVar("id", res.body.id);
+}

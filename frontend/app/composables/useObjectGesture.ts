@@ -15,15 +15,17 @@ function resizedRect(corner: Corner, start: Rect, dx: number, dy: number, keepSq
 
 // Turns pointer movement into board state changes while an object is dragged or resized.
 export function useObjectGesture(scale: Ref<number>) {
-  const { moveObject, resizeObject } = useBoard()
+  const { moveObject, resizeObject, saveObject } = useBoard()
 
   function start(event: PointerEvent, object: BoardObject, mode: GestureMode) {
     const startX = event.clientX
     const startY = event.clientY
     const origin = { ...object }
     const keepSquare = object.type === 'circle'
+    let moved = false
 
     function onPointerMove(moveEvent: PointerEvent) {
+      moved = true
       const dx = (moveEvent.clientX - startX) / scale.value
       const dy = (moveEvent.clientY - startY) / scale.value
       if (mode === 'move') moveObject(object.id, snapToGrid(origin.x + dx), snapToGrid(origin.y + dy))
@@ -33,6 +35,8 @@ export function useObjectGesture(scale: Ref<number>) {
     function onPointerUp() {
       window.removeEventListener('pointermove', onPointerMove)
       window.removeEventListener('pointerup', onPointerUp)
+      // Saved once at the end instead of on every pointer move. A plain click changes nothing.
+      if (moved) saveObject(object.id)
     }
 
     window.addEventListener('pointermove', onPointerMove)

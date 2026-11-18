@@ -1,0 +1,134 @@
+[
+  {
+    "id": "note-1",
+    "type": "sticky-note",
+    "x": 120,
+    "y": 120,
+    "width": 192,
+    "height": 192,
+    "text": "Hello, board!",
+    "color": "yellow",
+    "fontSize": 18,
+    "bold": false
+  },
+  {
+    "id": "note-2",
+    "type": "sticky-note",
+    "x": 360,
+    "y": 120,
+    "width": 192,
+    "height": 192,
+    "text": "Drag me around",
+    "color": "pink",
+    "fontSize": 18,
+    "bold": false
+  },
+  {
+    "id": "text-1",
+    "type": "text",
+    "x": 600,
+    "y": 120,
+    "width": 240,
+    "height": 72,
+    "text": "Just some text",
+    "fontSize": 18,
+    "bold": false
+  },
+  {
+    "id": "circle-1",
+    "type": "circle",
+    "x": 600,
+    "y": 240,
+    "width": 144,
+    "height": 144,
+    "color": "blue"
+  },
+  {
+    "type": "sticky-note",
+    "x": 120,
+    "y": 360,
+    "width": 192,
+    "height": 192,
+    "text": "Created with Bruno",
+    "color": "yellow",
+    "fontSize": 18,
+    "bold": false,
+    "id": "cedf1549-ddb6-4636-aa48-c007e73f6f03"
+  },
+  {
+    "type": "sticky-note",
+    "x": 120,
+    "y": 360,
+    "width": 192,
+    "height": 192,
+    "text": "Created with Bruno",
+    "color": "yellow",
+    "fontSize": 18,
+    "bold": false,
+    "id": "aa89594f-bdff-4f31-a4f2-a03aedf9fc0c"
+  },
+  {
+    "x": 480,
+    "y": 576,
+    "width": 192,
+    "height": 192,
+    "text": "",
+    "fontSize": 18,
+    "bold": false,
+    "type": "sticky-note",
+    "color": "pink",
+    "id": "a6f99d97-2471-496d-9962-3d3c9ef664e7"
+  },
+  {
+    "x": 576,
+    "y": 480,
+    "width": 192,
+    "height": 192,
+    "text": "",
+    "fontSize": 18,
+    "bold": false,
+    "type": "sticky-note",
+    "color": "green",
+    "id": "a5680eab-1734-44c1-a7c6-eae975ca1532"
+  },
+  {
+    "x": 696,
+    "y": 432,
+    "width": 144,
+    "height": 144,
+    "type": "circle",
+    "color": "purple",
+    "id": "4f8b5523-c70b-4481-b796-a5eae2e85716"
+  },
+  {
+    "x": 768,
+    "y": 360,
+    "width": 144,
+    "height": 144,
+    "type": "circle",
+    "color": "orange",
+    "id": "2e5d4a8b-f91b-4a30-958f-d9576f5d572b"
+  },
+  {
+    "x": 816,
+    "y": 384,
+    "width": 240,
+    "height": 72,
+    "text": "asdfasdf",
+    "fontSize": 18,
+    "bold": false,
+    "type": "text",
+    "id": "13c3f4c3-2ebb-41ed-8dfa-c63ac98d5bcf"
+  },
+  {
+    "x": 648,
+    "y": 528,
+    "width": 240,
+    "height": 72,
+    "text": "asdfasdf",
+    "fontSize": 18,
+    "bold": false,
+    "type": "text",
+    "id": "10978276-927a-44ce-96ef-0c869d931124"
+  }
+]

@@ -5,6 +5,10 @@ export default defineNuxtConfig({
   devtools: { enabled: false },
   modules: ['shadcn-nuxt'],
   css: ['~/assets/css/tailwind.css'],
+  // The frontend talks to the backend via /api, so the backend address lives only here.
+  routeRules: {
+    '/api/**': { proxy: 'http://localhost:3001/**' },
+  },
   vite: {
     plugins: [tailwindcss()],
   },

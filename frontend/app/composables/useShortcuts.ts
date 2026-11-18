@@ -9,7 +9,7 @@ interface Shortcut {
 // Keyboard shortcuts for canvas objects. They only use the base attributes,
 // so they work for every variant.
 export function useShortcuts(selectedId: Ref<string | null>, editingId: Ref<string | null>) {
-  const { objects, addCopy, removeObject, moveObject } = useBoard()
+  const { objects, addCopy, removeObject, moveObject, saveObject } = useBoard()
   let clipboard: BoardObject | null = null
 
   const shortcuts: Shortcut[] = [
@@ -53,13 +53,15 @@ export function useShortcuts(selectedId: Ref<string | null>, editingId: Ref<stri
   }
 
   function nudge(object: BoardObject | undefined, stepX: number, stepY: number) {
-    if (object) moveObject(object.id, object.x + stepX * GRID_SIZE, object.y + stepY * GRID_SIZE)
+    if (!object) return
+    moveObject(object.id, object.x + stepX * GRID_SIZE, object.y + stepY * GRID_SIZE)
+    saveObject(object.id)
   }
 
   // Copies land one grid step down and to the right of their source and become selected.
   function placeCopy(source: BoardObject) {
     const copy = { ...source, x: source.x + GRID_SIZE, y: source.y + GRID_SIZE }
-    selectedId.value = addCopy(copy)
+    addCopy(copy).then(id => (selectedId.value = id ?? null))
     return copy
   }
 
